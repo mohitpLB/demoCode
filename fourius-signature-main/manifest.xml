@@ -1,137 +1,170 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="MailApp">
-  <Id>{C341AD31-BF7A-4C1D-99F1-D2E5896BEB0A}</Id>
-  <Version>1.0</Version>
-  <ProviderName>Fourius</ProviderName>
-  <DefaultLocale>de-de</DefaultLocale>
-  <DisplayName DefaultValue="Fourius Signature Tool"/>
-  <Description DefaultValue="Add company signature with ease!"/>
-  <IconUrl DefaultValue="https://mtrhrst.github.io/fourius-signature/assets/final_logo.png"/>
-  <HighResolutionIconUrl DefaultValue="https://mtrhrst.github.io/fourius-signature/assets/final_logo.jpg"/>
-  <SupportUrl DefaultValue="https://github.com/mtrhrst/fourius-signature/blob/main/README.md"/>
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
+  <Id>eb01de0d-e1b7-42ad-ac7b-711cbb2a678e</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>SmartreplAI</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="SmartreplAI"/>
+  <Description DefaultValue="A template to get started."/>
+  <IconUrl DefaultValue="https://www.noraneko.co.jp/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://www.noraneko.co.jp/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+  <AppDomains>
+    <AppDomain>https://www.contoso.com</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
   <Requirements>
-    <Sets DefaultMinVersion="1.1">
-      <Set Name="Mailbox" />
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
     </Sets>
   </Requirements>
-
-  <!-- Old schema. This will be overridden by the VersionOverrides below. -->
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://mtrhrst.github.io/fourius-signature/src/taskpane/HTML/editsignature.html"/>
+        <SourceLocation DefaultValue="https://897386-nodejs.web.tornado-node.net"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
   </FormSettings>
-  <Permissions>ReadWriteMailbox</Permissions>
+  <Permissions>ReadWriteItem</Permissions>
   <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
-  <DisableEntityHighlighting>true</DisableEntityHighlighting>
-  <!-- /Old schema. -->
-
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
-    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
-      <Description resid="residAppDesc" />
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.3">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+        <!-- The <FunctionFile> element is a child element of DesktopFormFactor. 
+        The resid attribute of the <FunctionFile> element is set to the value of the id attribute of a <Url> element 
+        in the Resources element that contains the URL to an HTML file
+         that contains or loads all the JavaScript functions used by function command buttons, as defined by the Control element.  -->
+          <FunctionFile resid="Commands.Url"/>
+          <!-- Type MessageReadCommandSurface of ExtensionPoint is perform on MAIL BODY -->
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgCompose">
+                <Label resid="GroupLabel"/>
+                <!-- Type BUTTON means it will create a button  -->
+                <Control xsi:type="Button" id="msgReadOpen">
+                  <Label resid="ReadButton.Label"/>
+                  <Supertip>
+                    <Title resid="ReadButton.Label"/>
+                    <Description resid="ReadButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                  <!-- Buttons Logo -->
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <!-- Two Type of Action 1.ShowTaskpane 2. ExecuteFunction
+                  in ExecuteFunction this will work in background 
+                  and call from Commands.js-->
+                   <Action xsi:type="ExecuteFunction">
+                    <FunctionName>fromRead</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+          <!-- Type MessageComposeCommandSurface of ExtensionPoint is perform on COMPOSE SURFACE -->
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgComposeCmdGroup">
+                <Label resid="GroupLabel"/>
+                <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                  <Label resid="PositiveButton.Label"/>
+                  <Supertip>
+                    <Title resid="PositiveButton.Label"/>
+                    <Description resid="PositiveButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                   <Action xsi:type="ExecuteFunction">
+                    <FunctionName>positive</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="NegativeButton">
+                  <Label resid="NegativeButton.Label"/>
+                  <Supertip>
+                    <Title resid="NegativeButton.Label"/>
+                    <Description resid="NegativeButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Negative.16x16"/>
+                    <bt:Image size="32" resid="Negative.32x32"/>
+                    <bt:Image size="80" resid="Negative.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>negative</FunctionName>
+                  </Action>
+                </Control>
+                  <Control xsi:type="Button" id="msgReadOpenPane">
+                  <Label resid="CustomButton.Label"/>
+                  <Supertip>
+                    <Title resid="CustomButton.Label"/>
+                    <Description resid="CustomButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="CustomWrite.16x16"/>
+                    <bt:Image size="32" resid="CustomWrite.32x32"/>
+                    <bt:Image size="80" resid="CustomWrite.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>custom</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+      <!-- from icons tag use resid in Id -->
+        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/thumbUp-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/thumbUp-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/thumbUp-80.png"/>
 
-      <Requirements>
-        <bt:Sets DefaultMinVersion="1.10">
-          <bt:Set Name="Mailbox" />
-        </bt:Sets>
-      </Requirements>
+        <bt:Image id="Negative.16x16" DefaultValue="https://localhost:3000/assets/thumbDown-16.png"/>
+        <bt:Image id="Negative.32x32" DefaultValue="https://localhost:3000/assets/thumbDown-32.png"/>
+        <bt:Image id="Negative.80x80" DefaultValue="https://localhost:3000/assets/thumbDown-80.png"/>
 
-      <Hosts>
-        <Host xsi:type="MailHost">
-        <!-- Specify the runtime for event-based activation. -->
-        <!-- For more information, see https://docs.microsoft.com/office/dev/add-ins/outlook/autolaunch -->
-          <Runtimes>
-            <Runtime resid="Autorun">
-              <Override type="javascript" resid="runtimeJs"/>
-            </Runtime>
-          </Runtimes>
+        <bt:Image id="CustomWrite.16x16" DefaultValue="https://localhost:3000/assets/write-16.png"/>
+        <bt:Image id="CustomWrite.32x32" DefaultValue="https://localhost:3000/assets/write-32.png"/>
+        <bt:Image id="CustomWrite.80x80" DefaultValue="https://localhost:3000/assets/write-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+      <!-- Buttons name -->
+        <bt:String id="GroupLabel" DefaultValue="Contoso Add-in"/>
+        <bt:String id="ReadButton.Label" DefaultValue="Read"/>
+        <bt:String id="PositiveButton.Label" DefaultValue="Positive"/>
+        <bt:String id="NegativeButton.Label" DefaultValue="Negative"/>
+        <bt:String id="CustomButton.Label" DefaultValue="Custom Response"/>
 
-          <DesktopFormFactor>
-            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
-              <OfficeTab id="TabDefault">
-                <Group id="mccsG0">
-                  <Label resid="residGL0"/>
-                  <Control xsi:type="Button" id="MRCS_TpBtn0">
-                    <Label resid="residStr0"/>
-                    <Supertip>
-                      <Title resid="residStr0" />
-                      <Description resid="residTT0" />
-                    </Supertip>
-                    <Icon>
-                      <bt:Image size="16" resid="Icon16x16" />
-                      <bt:Image size="32" resid="Icon16x16" />
-                      <bt:Image size="80" resid="Icon16x16" />
-                    </Icon>
-                    <Action xsi:type="ShowTaskpane">
-                      <SourceLocation resid="residUrl0"/>
-                    </Action>
-                  </Control>
-                </Group>
-              </OfficeTab>
-            </ExtensionPoint>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+       <bt:String id="ReadButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
+        <bt:String id="PositiveButton.Tooltip" DefaultValue="Perform an action when clicked."/>
+        <bt:String id="NegativeButton.Tooltip" DefaultValue="Perform an action when clicked."/>
+        <bt:String id="CustomButton.Tooltip" DefaultValue="Perform an action when clicked."/>
 
-            <ExtensionPoint xsi:type="AppointmentOrganizerCommandSurface">
-              <OfficeTab id="TabDefault">
-                <Group id="aocsG0">
-                  <Label resid="residGL0"/>
-                  <Control xsi:type="Button" id="MRCS_TpBtn1">
-                    <Label resid="residStr0"/>
-                    <Supertip>
-                      <Title resid="residStr0"/>
-                      <Description resid="residTT0"/>
-                    </Supertip>
-                    <Icon>
-                      <bt:Image size="16" resid="Icon16x16" />
-                      <bt:Image size="32" resid="Icon16x16" />
-                      <bt:Image size="80" resid="Icon16x16" />
-                    </Icon>
-                    <Action xsi:type="ShowTaskpane">
-                      <SourceLocation resid="residUrl0"/>
-                    </Action>
-                  </Control>
-                </Group>
-              </OfficeTab>
-            </ExtensionPoint>
-            
-            <!-- Specify function to call for new message and new appointment events -->
-            <ExtensionPoint xsi:type="LaunchEvent">
-              <LaunchEvents>
-                <LaunchEvent Type="OnNewMessageCompose" FunctionName="checkSignature" />
-                <LaunchEvent Type="OnNewAppointmentOrganizer" FunctionName="checkSignature" />
-              </LaunchEvents>
-              <SourceLocation resid="Autorun" />
-            </ExtensionPoint>
-
-          </DesktopFormFactor>
-        </Host>
-      </Hosts>
-      <Resources>
-        <bt:Images>
-          <bt:Image id="Icon16x16" DefaultValue="https://mtrhrst.github.io/fourius-signature/assets/final_logo.png"></bt:Image>
-        </bt:Images>
-        <bt:Urls>
-          <bt:Url id="residUrl0" DefaultValue="https://mtrhrst.github.io/fourius-signature/src/taskpane/HTML/editsignature.html"></bt:Url>
-          <bt:Url id="Autorun" DefaultValue="https://mtrhrst.github.io/fourius-signature/src/runtime/HTML/autorunweb.html"></bt:Url>
-          <bt:Url id="runtimeJs" DefaultValue="https://mtrhrst.github.io/fourius-signature/src/runtime/Js/autorunshared.js"></bt:Url>
-        </bt:Urls>
-        <bt:ShortStrings>
-          <bt:String id="residGL0" DefaultValue="Signature Injector"></bt:String>
-          <bt:String id="residStr0" DefaultValue="Set Fourius Signature"></bt:String>
-        </bt:ShortStrings>
-        <bt:LongStrings>
-          <bt:String id="residAppDesc" DefaultValue="Add company signature with ease."></bt:String>
-          <bt:String id="residTT0" DefaultValue="Opens a pane displaying all available properties."></bt:String>
-        </bt:LongStrings>
-      </Resources>
-    </VersionOverrides>
+      </bt:LongStrings>
+    </Resources>
   </VersionOverrides>
 </OfficeApp>
